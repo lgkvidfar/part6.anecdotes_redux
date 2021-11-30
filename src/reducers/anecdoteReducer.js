@@ -35,11 +35,10 @@ const reducer = (state = [...initialState], action) => {
   case 'NEW_ANECDOTE':
     return [...state, action.data]
   default:
-    console.log('no changes made')
+    console.log('anecdoteReducer says no changes made')
     return state
   }
 }
-
 
 //action creators
 export const createAnecdote = (content) => {

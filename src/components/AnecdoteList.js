@@ -1,8 +1,17 @@
-import React,{ useEffect, useState} from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleVoteOf } from '../reducers/anecdoteReducer'
+import { setNotification,stopNotification } from '../reducers/notificationReducer'
 
-const Anecdote = ({ anecdote,handleClick }) => {
+const Anecdote = ({ anecdote }) => {
+    const dispatch = useDispatch()
+
+    const handleVote = () => {
+         dispatch(toggleVoteOf(anecdote.id))
+         dispatch(setNotification(anecdote))
+         setTimeout(() => dispatch(stopNotification()), 3000)
+    }
+
     return (
     <div>
         <li>
@@ -10,16 +19,17 @@ const Anecdote = ({ anecdote,handleClick }) => {
         </li>
     <div>
         has {anecdote.votes} 
-        <button onClick={handleClick}> votes</button>
+        <button type="button" onClick={handleVote}>votes</button>
     </div>
   </div>
     )
 }
 
 const Anecdotes = () => {
-    const dispatch = useDispatch()
-    const anecdotes = useSelector(state => state)
-    const sortedAnecdotes = [...anecdotes].sort((a, b) => b.votes - a.votes)
+    const anecdotes = useSelector(state => state.anecdotes)
+    const filter = useSelector(state => state.filter.toLowerCase())
+    const filteredAnecdotes = anecdotes.filter(a => a.content.toLowerCase().includes(filter))
+    const sortedAnecdotes = [...filteredAnecdotes].sort((a, b) => b.votes - a.votes)
 
     return (
         <ul>
@@ -27,8 +37,6 @@ const Anecdotes = () => {
                 <Anecdote 
                 key={a.id}
                 anecdote={a}
-                handleClick={() => dispatch(toggleVoteOf(a.id))
-                }
             />
             )}
         </ul>
