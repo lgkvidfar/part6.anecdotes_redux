@@ -20,5 +20,10 @@ const updateVote = async (anecdote) => {
   return response.data
 }
 
-const exports =  { getAll, createNew, updateVote }
+const deleteAnecdote = async (anecdote) => {
+  const response = axios.delete((`${baseUrl}/${anecdote.id}`))
+  return response.data
+}
+
+const exports =  { getAll, createNew, updateVote,deleteAnecdote }
 export default exports

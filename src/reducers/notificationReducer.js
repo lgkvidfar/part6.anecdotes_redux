@@ -11,6 +11,7 @@ const notificationReducer = (state = null, action) => {
     }
 }
 
+//action creators
 export const timedMessage = (message, timer) => {
   return async dispatch => {
     await dispatch(setNotification(message))
