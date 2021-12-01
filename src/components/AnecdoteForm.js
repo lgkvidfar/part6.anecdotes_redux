@@ -1,18 +1,20 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { createAnecdote } from '../reducers/anecdoteReducer'
-import { setNewNotification,stopNotification } from '../reducers/notificationReducer'
+import { timedMessage } from '../reducers/notificationReducer'
 
 const NewAnecdote = () => {
     const dispatch = useDispatch()
 
-    const addAnecdote = (event) => {
+    const addAnecdote = async (event) => {
         event.preventDefault()
+
         const content = event.target.anecdoteInput.value
         event.target.anecdoteInput.value=''
+
         dispatch(createAnecdote(content))
-        dispatch(setNewNotification(content))
-        setTimeout(() => dispatch(stopNotification()), 3000)
+
+        dispatch(timedMessage(`${content} added to list of blogs`, 2))
     }
 
     return (

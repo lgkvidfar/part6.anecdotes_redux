@@ -1,13 +1,9 @@
 const notificationReducer = (state = null, action) => {
     console.log('filterReducer ACTION:', action)
     switch(action.type){
-    case 'VOTE_MESSAGE':
-      const voteMessage = action.data.message.content
-      return `latest vote: ${voteMessage}`
-    case 'NEW_MESSAGE':
-      const newMessage = action.data.message
-      console.log(action.data.message)
-      return `'${newMessage}'' added to list of blogs`
+    case 'MESSAGE':
+      const message = action.data.message
+      return `${message}`
     case 'NULL':
         return null
     default:
@@ -15,18 +11,19 @@ const notificationReducer = (state = null, action) => {
     }
 }
 
-export const setVoteNotification = message =>{
-    return {
-      type: 'VOTE_MESSAGE',
-      data: { message }
-    }
+export const timedMessage = (message, timer) => {
+  return async dispatch => {
+    await dispatch(setNotification(message))
+    setTimeout(async () => 
+    await dispatch(stopNotification()), timer*1000)
+  }
 }
 
-export const setNewNotification = message => {
-  return {
-    type: 'NEW_MESSAGE',
-    data: { message }
-  }
+export const setNotification = message =>{
+    return {
+      type: 'MESSAGE',
+      data: { message }
+    }
 }
 
 export const stopNotification = () => ({
