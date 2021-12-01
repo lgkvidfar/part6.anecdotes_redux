@@ -19,10 +19,7 @@ const asObject = (anecdote) => {
 
 const initialState = anecdotesAtStart.map(asObject)
 
-const reducer = (state = [...initialState], action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
-
+const anecdoteReducer = (state = [...initialState], action) => {
   switch(action.type){
   case 'TOGGLE_VOTE':
     const id = action.data.id
@@ -35,7 +32,6 @@ const reducer = (state = [...initialState], action) => {
   case 'NEW_ANECDOTE':
     return [...state, action.data]
   default:
-    console.log('anecdoteReducer says no changes made')
     return state
   }
 }
@@ -59,4 +55,4 @@ export const toggleVoteOf = (id) => {
   }
 }
 
-export default reducer
+export default anecdoteReducer
