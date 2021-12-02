@@ -1,5 +1,4 @@
 const notificationReducer = (state = null, action) => {
-    console.log('filterReducer ACTION:', action)
     switch(action.type){
     case 'MESSAGE':
       const message = action.data.message
@@ -14,9 +13,9 @@ const notificationReducer = (state = null, action) => {
 //action creators
 export const timedMessage = (message, timer) => {
   return async dispatch => {
-    await dispatch(setNotification(message))
-    setTimeout(async () => 
-    await dispatch(stopNotification()), timer*1000)
+     dispatch(setNotification(message))
+     setTimeout(async () => 
+     dispatch(stopNotification()), timer*1000)
   }
 }
 
